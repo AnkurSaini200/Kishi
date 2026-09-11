@@ -1,0 +1,1 @@
+export function AuthForm() { return <form><input className="search" type="email" placeholder="Email" /><input className="search" type="password" placeholder="Password" /><button className="button" type="submit">Continue</button></form> }

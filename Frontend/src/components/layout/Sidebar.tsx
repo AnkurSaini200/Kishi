@@ -1,0 +1,1 @@
+export function Sidebar() { return <aside className="sidebar"><h1 className="brand">Kishi</h1><nav className="nav-list"><a className="nav-item active" href="#vault">Vault</a><a className="nav-item" href="#security">Security</a><a className="nav-item" href="#settings">Settings</a></nav></aside> }

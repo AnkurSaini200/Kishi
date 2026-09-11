@@ -1,0 +1,1 @@
+export function usePasswordGenerator() { return (length = 20) => Array.from({ length }, () => 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%'[Math.floor(Math.random() * 70)]).join('') }
