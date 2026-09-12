@@ -1,0 +1,47 @@
+========== Requirements =============
+
+Kishi Requirements
+│
+├── Authentication
+│   ├── Register
+│   └── Login
+│
+├── Vault
+│   ├── Create
+│   ├── Read
+│   ├── Update
+│   └── Delete
+│
+├── Security
+│   ├── Password strength
+│   ├── Reused passwords
+│   ├── Auto-lock
+│   └── Clipboard clearing
+│
+└── Tools
+    └── Password generator
+
+
+======== DESIGN OF THE SYSTEM ===========
+
+                ┌──────────────┐
+                │    React     │
+                │  TypeScript  │
+                └──────┬───────┘
+                       │
+                    HTTP/API
+                       │
+                       ▼
+              ┌─────────────────┐
+              │   Spring Boot   │
+              │                 │
+              │ Security        │
+              │ Controllers     │
+              │ Services        │
+              │ Repositories    │
+              └────────┬────────┘
+                       │
+                       ▼
+                ┌─────────────┐
+                │ PostgreSQL  │
+                └─────────────┘
