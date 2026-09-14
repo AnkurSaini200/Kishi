@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
             EmailAlreadyExistsException exception) {
 
         AuthResponse response =
-                new AuthResponse(exception.getMessage());
+                new AuthResponse(exception.getMessage(), null);
 
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
