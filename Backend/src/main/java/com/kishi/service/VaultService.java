@@ -100,4 +100,37 @@ public class VaultService {
                 updatedEntry.getWebsite()
         );
     }
+
+        public void deleteEntry(Long id, User user) {
+
+        VaultEntry entry = vaultEntryRepository.findByIdAndUser(id, user);
+
+        if (entry == null) {
+            throw new RuntimeException("Vault entry not found");
+        }
+
+        vaultEntryRepository.delete(entry);
+    }
+
+        public List<VaultResponse> searchEntries(
+            String title,
+            User user) {
+            
+        List<VaultEntry> entries =
+                vaultEntryRepository
+                        .findAllByUserAndTitleContainingIgnoreCase(
+                                user,
+                                title
+                        );
+                    
+        return entries.stream()
+                .map(entry -> new VaultResponse(
+                        entry.getId(),
+                        entry.getTitle(),
+                        entry.getUsername(),
+                        entry.getEncryptedPassword(),
+                        entry.getWebsite()
+                ))
+                .toList();
+    }
 }

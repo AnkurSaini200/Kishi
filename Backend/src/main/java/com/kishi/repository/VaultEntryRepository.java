@@ -13,4 +13,8 @@ public interface VaultEntryRepository extends JpaRepository<VaultEntry, Long> {
 
     VaultEntry findByIdAndUser(Long id, User user);
 
+    List<VaultEntry> findAllByUserAndTitleContainingIgnoreCase(
+        User user,
+        String title);
+
 }
