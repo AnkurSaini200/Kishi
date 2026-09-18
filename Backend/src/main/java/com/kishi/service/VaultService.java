@@ -60,38 +60,37 @@ public class VaultService {
     public VaultResponse getEntry(Long id, User user) {
 
         VaultEntry entry =
-                vaultEntryRepository.findByIdAndUser(id, user);
-
-        if (entry == null) {
-            throw new RuntimeException("Vault entry not found");
-        }
+                vaultEntryRepository.findByIdAndUser(id, user)
+                        .orElseThrow(() ->
+                                new RuntimeException("Vault entry not found"));
 
         return new VaultResponse(
-                entry.getId(),
-                entry.getTitle(),
-                entry.getUsername(),
-                entry.getEncryptedPassword(),
-                entry.getWebsite()
+            entry.getId(),
+            entry.getTitle(),
+            entry.getUsername(),
+            entry.getEncryptedPassword(),
+            entry.getWebsite()
         );
     }
 
-    public VaultResponse updateEntry(
-        Long id,
-        VaultRequest request,
-        User user) {
+       public VaultResponse updateEntry(
+            Long id,
+            VaultRequest request,
+            User user) {
 
         VaultEntry entry =
-                vaultEntryRepository.findByIdAndUser(id, user);
-        if (entry == null) {
-            throw new RuntimeException("Vault entry not found");
-        }
-        
+                vaultEntryRepository.findByIdAndUser(id, user)
+                        .orElseThrow(() ->
+                                new RuntimeException("Vault entry not found"));
+
         entry.setTitle(request.getTitle());
         entry.setUsername(request.getUsername());
         entry.setEncryptedPassword(request.getEncryptedPassword());
         entry.setWebsite(request.getWebsite());
+
         VaultEntry updatedEntry =
-            vaultEntryRepository.save(entry);
+                vaultEntryRepository.save(entry);
+
         return new VaultResponse(
                 updatedEntry.getId(),
                 updatedEntry.getTitle(),
@@ -101,14 +100,13 @@ public class VaultService {
         );
     }
 
-        public void deleteEntry(Long id, User user) {
-
-        VaultEntry entry = vaultEntryRepository.findByIdAndUser(id, user);
-
-        if (entry == null) {
-            throw new RuntimeException("Vault entry not found");
-        }
-
+            public void deleteEntry(Long id, User user) {
+            
+        VaultEntry entry =
+                vaultEntryRepository.findByIdAndUser(id, user)
+                        .orElseThrow(() ->
+                                new RuntimeException("Vault entry not found"));
+            
         vaultEntryRepository.delete(entry);
     }
 
