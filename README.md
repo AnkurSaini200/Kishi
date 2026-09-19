@@ -149,7 +149,3 @@ CREATE DATABASE kishi;
 - Use HTTPS in production to protect all API communication.
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License.
