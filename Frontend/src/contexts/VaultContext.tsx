@@ -266,9 +266,12 @@ export function VaultProvider({
       isAuthenticated &&
       token
     ) {
-      void refreshEntries();
+      const refreshTimeout = window.setTimeout(() => {
+        void refreshEntries();
+      }, 0);
 
       return () => {
+        window.clearTimeout(refreshTimeout);
         setEntries([]);
       };
     }
