@@ -1,18 +1,22 @@
 package com.kishi.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class VaultRequest {
 
     @NotBlank(message = "Title is required")
+    @Size(max = 200, message = "Title must not exceed 200 characters")
     private String title;
 
     @NotBlank(message = "Username is required")
+    @Size(max = 200, message = "Username must not exceed 200 characters")
     private String username;
 
     @NotBlank(message = "Encrypted password is required")
     private String encryptedPassword;
 
+    @Size(max = 500, message = "Website must not exceed 500 characters")
     private String website;
 
     public String getTitle() {

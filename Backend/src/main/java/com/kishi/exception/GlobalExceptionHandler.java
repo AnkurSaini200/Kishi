@@ -12,33 +12,49 @@ import com.kishi.dto.ErrorResponse;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(EmailAlreadyExistsException.class)
-    public ResponseEntity<AuthResponse> handleEmailAlreadyExists(
+        @ExceptionHandler(EmailAlreadyExistsException.class)
+        public ResponseEntity<AuthResponse> handleEmailAlreadyExists(
             EmailAlreadyExistsException exception) {
 
-        AuthResponse response =
-                new AuthResponse(exception.getMessage(), null);
+                AuthResponse response =
+                        new AuthResponse(exception.getMessage(), null);
 
-        return ResponseEntity
-                .status(HttpStatus.CONFLICT)
-                .body(response);
-    }
+                        return ResponseEntity
+                        .status(HttpStatus.CONFLICT)
+                        .body(response);
+        }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidationErrors(
-            MethodArgumentNotValidException exception) {
+        @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseEntity<ErrorResponse> handleValidationErrors(
+                MethodArgumentNotValidException exception) {
 
-        String message =
-                exception.getBindingResult()
-                        .getFieldErrors()
-                        .get(0)
-                        .getDefaultMessage();
+            String message =
+                    exception.getBindingResult()
+                            .getFieldErrors()
+                            .stream()
+                            .map(error -> error.getDefaultMessage())
+                            .findFirst()
+                            .orElse("Invalid request");
 
-        ErrorResponse response =
-                new ErrorResponse(message);
+            ErrorResponse response =
+                    new ErrorResponse(message);
 
-        return ResponseEntity
-                .status(HttpStatus.BAD_REQUEST)
-                .body(response);
-    }
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(response);
+        }
+
+        @ExceptionHandler(ResourceNotFoundException.class)
+        public ResponseEntity<ErrorResponse> handleResourceNotFound(
+                ResourceNotFoundException exception) {
+
+            ErrorResponse response =
+                    new ErrorResponse(exception.getMessage());
+
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(response);
+        }
+
+        
 }

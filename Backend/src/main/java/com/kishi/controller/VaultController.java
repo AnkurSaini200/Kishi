@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.kishi.dto.VaultRequest;
 import com.kishi.dto.VaultResponse;
 import com.kishi.entity.User;
-import com.kishi.repository.UserRepository;
+import com.kishi.service.CurrentUserService;
 import com.kishi.service.VaultService;
 
 import jakarta.validation.Valid;
@@ -27,14 +27,14 @@ import jakarta.validation.Valid;
 public class VaultController {
 
     private final VaultService vaultService;
-    private final UserRepository userRepository;
+    private final CurrentUserService currentUserService;
 
     public VaultController(
             VaultService vaultService,
-            UserRepository userRepository) {
+            CurrentUserService currentUserService) {
 
         this.vaultService = vaultService;
-        this.userRepository = userRepository;
+        this.currentUserService = currentUserService;
     }
 
     @PostMapping
@@ -42,11 +42,8 @@ public class VaultController {
             @Valid @RequestBody VaultRequest request,
             Authentication authentication) {
 
-        String email = authentication.getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+        User user =
+                currentUserService.getCurrentUser(authentication);
 
         VaultResponse response =
                 vaultService.createEntry(request, user);
@@ -58,84 +55,74 @@ public class VaultController {
     public ResponseEntity<List<VaultResponse>> getAllEntries(
             Authentication authentication) {
 
-        String email = authentication.getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+        User user =
+                currentUserService.getCurrentUser(authentication);
 
         List<VaultResponse> response =
                 vaultService.getAllEntries(user);
 
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<VaultResponse>> searchEntries(
+            @RequestParam String title,
+            Authentication authentication) {
+
+        User user =
+                currentUserService.getCurrentUser(authentication);
+
+        List<VaultResponse> response =
+                vaultService.searchEntries(title, user);
+
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<VaultResponse> getEntry(
             @PathVariable Long id,
             Authentication authentication) {
 
-        String email = authentication.getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+        User user =
+                currentUserService.getCurrentUser(authentication);
 
         VaultResponse response =
                 vaultService.getEntry(id, user);
 
         return ResponseEntity.ok(response);
     }
-    
-        @PutMapping("/{id}")
-        public ResponseEntity<VaultResponse> updateEntry(
+
+    @PutMapping("/{id}")
+    public ResponseEntity<VaultResponse> updateEntry(
             @PathVariable Long id,
             @Valid @RequestBody VaultRequest request,
             Authentication authentication) {
 
-        String email = authentication.getName();
-
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+        User user =
+                currentUserService.getCurrentUser(authentication);
 
         VaultResponse response =
-                vaultService.updateEntry(id, request, user);
+                vaultService.updateEntry(
+                        id,
+                        request,
+                        user
+                );
 
         return ResponseEntity.ok(response);
-        }
-        
-        @GetMapping("/search")
-        public ResponseEntity<List<VaultResponse>> searchEntries(
-                @RequestParam String title,
-                Authentication authentication) {
-                
-            String email = authentication.getName();
-                
-            User user = userRepository.findByEmail(email)
-                    .orElseThrow(() ->
-                            new RuntimeException("User not found"));
-                
-            List<VaultResponse> response =
-                    vaultService.searchEntries(title, user);
-                
-            return ResponseEntity.ok(response);
-        }
+    }
 
-        @DeleteMapping("/{id}")
-        public ResponseEntity<String> deleteEntry(
-                @PathVariable Long id,
-                Authentication authentication) {
-        
-        String email = authentication.getName();
-        
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() ->
-                        new RuntimeException("User not found"));
-        
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEntry(
+            @PathVariable Long id,
+            Authentication authentication) {
+
+        User user =
+                currentUserService.getCurrentUser(authentication);
+
         vaultService.deleteEntry(id, user);
-        
-        return ResponseEntity.ok("Vault entry deleted successfully");
-        }
 
-               
+        return ResponseEntity.ok(
+                "Vault entry deleted successfully"
+        );
+    }
 }

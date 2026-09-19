@@ -1,23 +1,385 @@
 @import "tailwindcss";
 
-:root {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+@layer base {
+  :root {
+    color-scheme: light !important;
+    --win98-gray: #c0c0c0;
+    --win98-light: #ffffff;
+    --win98-mid-light: #dfdfdf;
+    --win98-mid-dark: #808080;
+    --win98-dark: #000000;
+    --win98-blue-start: #000080;
+    --win98-blue-end: #1084d0;
+    --win98-desktop: #008080;
+    --win98-selection: #000080;
+  }
+
+  html, body {
+    color-scheme: light !important;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-radius: 0 !important; /* Authentic Windows 95/98 square corners */
+  }
+
+  body {
+    margin: 0;
+    min-width: 320px;
+    background-color: var(--win98-desktop) !important;
+    color: #000000 !important;
+    font-family: Tahoma, "MS Sans Serif", "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--win98-desktop) !important;
+  }
+
+  /* Classic Windows 95/98 Scrollbar */
+  ::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #dfdfdf;
+    background-image: repeating-linear-gradient(
+      45deg,
+      #c0c0c0,
+      #c0c0c0 1px,
+      #ffffff 1px,
+      #ffffff 2px
+    );
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border: 1px solid;
+    border-color: #ffffff #808080 #808080 #ffffff;
+    box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #000000;
+  }
+  ::-webkit-scrollbar-thumb:active {
+    border-color: #808080 #ffffff #ffffff #808080;
+    box-shadow: inset 1px 1px #000000, inset -1px -1px #dfdfdf;
+  }
 }
 
-* {
-  box-sizing: border-box;
+/* ==========================================================================
+   AUTHENTIC WINDOWS 95/98 UI CONTROLS (RESTORED TO USABLE, COMFORTABLE SCALE)
+   ========================================================================== */
+
+/* 3D Window Frame */
+.win98-window {
+  background-color: #c0c0c0 !important;
+  border-top: 2px solid #ffffff !important;
+  border-left: 2px solid #ffffff !important;
+  border-right: 2px solid #000000 !important;
+  border-bottom: 2px solid #000000 !important;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080 !important;
+  padding: 3px;
+  color: #000000 !important;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
-  background-color: #0b101d;
-  color: #f1f5f9;
+/* Classic Active Title Bar */
+.win98-title-bar {
+  background: linear-gradient(90deg, #000080 0%, #1084d0 100%);
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 12px;
+  padding: 3px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  min-height: 22px;
 }
 
-#root {
-  min-height: 100vh;
+.win98-title-bar-inactive {
+  background: #808080;
+  color: #c0c0c0;
+}
+
+/* Window Control Buttons (_ □ X) */
+.win98-title-controls {
+  display: flex;
+  gap: 2px;
+}
+
+.win98-title-btn {
+  width: 18px;
+  height: 16px;
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #000000;
+  border-bottom: 1px solid #000000;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080;
+  color: #000000;
+  font-family: Tahoma, "MS Sans Serif", sans-serif;
+  font-size: 10px;
+  font-weight: bold;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.win98-title-btn:active {
+  border-color: #000000 #ffffff #ffffff #000000;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf;
+  padding: 1px 0 0 1px;
+}
+
+/* Classic Beveled 3D Button */
+.win98-btn {
+  background-color: #c0c0c0 !important;
+  border-top: 1px solid #ffffff !important;
+  border-left: 1px solid #ffffff !important;
+  border-right: 1px solid #000000 !important;
+  border-bottom: 1px solid #000000 !important;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #808080 !important;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  color: #000000 !important;
+  outline: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  user-select: none;
+  min-height: 28px;
+}
+
+.win98-btn:hover {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+}
+
+.win98-btn:active,
+.win98-btn.active {
+  border-top: 1px solid #000000 !important;
+  border-left: 1px solid #000000 !important;
+  border-right: 1px solid #ffffff !important;
+  border-bottom: 1px solid #ffffff !important;
+  box-shadow: inset 1px 1px 0 #808080, inset -1px -1px 0 #dfdfdf !important;
+  padding: 6px 13px 4px 15px;
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+}
+
+.win98-btn:focus-visible {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
+}
+
+.win98-btn:disabled {
+  color: #808080 !important;
+  text-shadow: 1px 1px 0 #ffffff;
+  cursor: not-allowed;
+}
+
+/* Primary/Default Button (Thick black outer border) */
+.win98-btn-default {
+  border: 1px solid #000000 !important;
+  box-shadow: inset 1px 1px 0 #ffffff, inset -1px -1px 0 #808080, inset 2px 2px 0 #dfdfdf, inset -2px -2px 0 #000000 !important;
+  font-weight: bold;
+}
+
+/* 3D Sunken Panel (Input fields, Viewports, Tree Views, Content) */
+.win98-sunken {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-top: 1px solid #808080 !important;
+  border-left: 1px solid #808080 !important;
+  border-right: 1px solid #ffffff !important;
+  border-bottom: 1px solid #ffffff !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #dfdfdf !important;
+}
+
+/* 3D Raised Panel */
+.win98-raised {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+  border-top: 1px solid #ffffff !important;
+  border-left: 1px solid #ffffff !important;
+  border-right: 1px solid #808080 !important;
+  border-bottom: 1px solid #808080 !important;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #000000 !important;
+}
+
+/* 3D Inset Input Field */
+.win98-input {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+  border-top: 1px solid #808080 !important;
+  border-left: 1px solid #808080 !important;
+  border-right: 1px solid #ffffff !important;
+  border-bottom: 1px solid #ffffff !important;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #dfdfdf !important;
+  padding: 5px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  outline: none;
+  min-height: 28px;
+}
+
+.win98-input:focus {
+  outline: none;
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+/* Classic Menu Bar */
+.win98-menubar {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #808080;
+  display: flex;
+  gap: 2px;
+  padding: 2px 6px;
+  font-size: 12px;
+  user-select: none;
+}
+
+.win98-menu-item {
+  padding: 2px 8px;
+  cursor: pointer;
+  color: #000000 !important;
+}
+
+.win98-menu-item:hover {
+  background-color: #000080 !important;
+  color: #ffffff !important;
+}
+
+/* Classic Toolbar */
+.win98-toolbar {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+  border-bottom: 1px solid #808080;
+  box-shadow: 0 1px 0 #ffffff;
+  padding: 4px 6px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.win98-toolbar-separator {
+  width: 2px;
+  height: 24px;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  margin: 0 4px;
+}
+
+/* Classic Status Bar */
+.win98-status-bar {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+  border-top: 1px solid #808080;
+  box-shadow: 0 -1px 0 #ffffff;
+  padding: 3px;
+  display: flex;
+  gap: 3px;
+  font-size: 11px;
+}
+
+.win98-status-segment {
+  background-color: #c0c0c0 !important;
+  color: #000000 !important;
+  border-top: 1px solid #808080;
+  border-left: 1px solid #808080;
+  border-right: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #dfdfdf;
+  padding: 2px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Classic Group Box */
+.win98-groupbox {
+  background-color: #c0c0c0 !important;
+  border-top: 1px solid #ffffff !important;
+  border-left: 1px solid #ffffff !important;
+  border-right: 1px solid #808080 !important;
+  border-bottom: 1px solid #808080 !important;
+  box-shadow: -1px -1px 0 #808080, 1px 1px 0 #ffffff !important;
+  padding: 14px 12px 12px;
+  margin-top: 8px;
+  position: relative;
+  color: #000000 !important;
+}
+
+.win98-groupbox-legend {
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0 5px;
+  background-color: #c0c0c0 !important;
+  position: absolute;
+  top: -8px;
+  left: 10px;
+  color: #000000 !important;
+}
+
+/* Classic Details List View (Windows Explorer style) */
+.win98-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  text-align: left;
+}
+
+.win98-th {
+  background: #c0c0c0;
+  border-top: 1px solid #ffffff;
+  border-left: 1px solid #ffffff;
+  border-right: 1px solid #808080;
+  border-bottom: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #dfdfdf, inset -1px -1px 0 #000000;
+  padding: 4px 8px;
+  font-weight: normal;
+  user-select: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.win98-th:active {
+  border-color: #808080 #ffffff #ffffff #808080;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #dfdfdf;
+  padding: 5px 7px 3px 9px;
+}
+
+.win98-tr {
+  cursor: pointer;
+}
+
+.win98-tr:hover {
+  background-color: #f0f0f0;
+}
+
+.win98-tr-selected {
+  background-color: #000080 !important;
+  color: #ffffff !important;
+}
+
+.win98-tr-selected a {
+  color: #ffffff !important;
+}
+
+.win98-td {
+  padding: 5px 8px;
+  border-bottom: 1px solid #e0e0e0;
+  vertical-align: middle;
 }

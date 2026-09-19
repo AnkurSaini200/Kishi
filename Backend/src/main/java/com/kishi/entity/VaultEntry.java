@@ -1,5 +1,6 @@
 package com.kishi.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,7 +21,7 @@ public class VaultEntry{
     @JoinColumn (nullable = false)
     private String username;
     
-    @JoinColumn (nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String encryptedPassword;
 
     private String website;

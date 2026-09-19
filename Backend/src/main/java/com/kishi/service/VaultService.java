@@ -8,6 +8,7 @@ import com.kishi.dto.VaultRequest;
 import com.kishi.dto.VaultResponse;
 import com.kishi.entity.User;
 import com.kishi.entity.VaultEntry;
+import com.kishi.exception.ResourceNotFoundException;
 import com.kishi.repository.VaultEntryRepository;
 
 @Service
@@ -62,7 +63,7 @@ public class VaultService {
         VaultEntry entry =
                 vaultEntryRepository.findByIdAndUser(id, user)
                         .orElseThrow(() ->
-                                new RuntimeException("Vault entry not found"));
+                new ResourceNotFoundException("Vault entry not found"));
 
         return new VaultResponse(
             entry.getId(),
@@ -81,7 +82,7 @@ public class VaultService {
         VaultEntry entry =
                 vaultEntryRepository.findByIdAndUser(id, user)
                         .orElseThrow(() ->
-                                new RuntimeException("Vault entry not found"));
+        new ResourceNotFoundException("Vault entry not found"));
 
         entry.setTitle(request.getTitle());
         entry.setUsername(request.getUsername());
@@ -105,7 +106,7 @@ public class VaultService {
         VaultEntry entry =
                 vaultEntryRepository.findByIdAndUser(id, user)
                         .orElseThrow(() ->
-                                new RuntimeException("Vault entry not found"));
+        new ResourceNotFoundException("Vault entry not found"));
             
         vaultEntryRepository.delete(entry);
     }

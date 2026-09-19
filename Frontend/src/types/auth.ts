@@ -1,23 +1,28 @@
 export interface User {
-  id: string
-  name: string
-  email: string
-  avatarUrl?: string
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface AuthResponse {
+  message: string;
+  token: string;
 }
 
 export interface AuthContextType {
-  user: User | null
-  isAuthenticated: boolean
-  login: (email: string, password?: string) => Promise<boolean>
-  register: (data: { email: string; name?: string; password?: string; passwordHint?: string }) => Promise<boolean>
-  loginWithGoogle: () => Promise<boolean>
-  loginWithPasskey: () => Promise<boolean>
-  loginWithSso: () => Promise<boolean>
-  logout: () => void
+  user: User | null;
+  token: string | null;
+  isAuthenticated: boolean;
+  login: (email: string, password: string) => Promise<boolean>;
+  register: (email: string, password: string) => Promise<boolean>;
+  loginWithGoogle: () => Promise<boolean>;
+  loginWithPasskey: () => Promise<boolean>;
+  loginWithSso: () => Promise<boolean>;
+  logout: () => void;
 }
 
 export interface AuthState {
-  user: User | null
-  isAuthenticated: boolean
+  user: User | null;
+  token: string | null;
+  isAuthenticated: boolean;
 }
-

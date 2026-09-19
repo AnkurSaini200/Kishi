@@ -1,4 +1,9 @@
-import type { EncryptedValue } from './types'
-export function encrypt(value: string): EncryptedValue { return { ciphertext: btoa(value), iv: '', salt: '' } }
-export function decrypt(value: EncryptedValue): string { return atob(value.ciphertext) }
+export {
+  encryptVaultData,
+  decryptVaultData,
+  deriveKey,
+  PBKDF2_ITERATIONS,
+  KEY_LENGTH,
+} from './vaultCrypto';
 
+export type { EncryptedVaultPayload, EncryptedValue } from './types';
